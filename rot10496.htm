@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8" />
+	<title>ROT10496</title>
+	<style type="text/css">
+		body {
+			background-color: white;
+			font-family: Sans-Serif;
+			text-align: center;
+		}
+		h1 {
+			margin-bottom: 0.1em;
+		}
+		h2 {
+			font-size: 1em;
+			font-weight: normal;
+			margin: 0 auto 5em auto;
+		}
+		.arrow {
+			font-size: 2.0em;
+			font-weight: bold;
+			margin: 0;
+		}
+		.warning {
+			background-color: orange;
+			padding: 0.4em 0.75em;
+		}
+	</style>
+
+	<!-- the algorithm -->
+	<script>
+		function rot(s, i) {
+			var res = "";
+			for (var index = 0; index < s.length; index++) {
+				const ord = s.charCodeAt(index);
+				if (ord >= 0x4E00 && ord <= 0x9FFF) {
+					res += String.fromCharCode((ord-0x4E00+i) % 20992 + 0x4E00);
+				} else {
+					res += s[index];
+				}
+			}
+			return res;
+		}
+		function update() {
+			document.getElementById('output').value = rot(document.getElementById('input').value, +document.getElementById('rot').value);
+		}
+	</script>
+
+</head>
+<body>
+
+<h1>ROT10496</h1>
+<h2><a href="https://rot13.com/">Inspiration</a></h2>
+<h2><b>WARNING:</b> This program <b>only performs toy encryption</b> and is intended for <b>educational purposes only.</b></h2>
+
+<noscript><p><span class="warning"><em>Please enable JavaScript to use this page.</em></span></p></noscript>
+
+<p><textarea id="input" cols="80" rows="12" onkeyup="update()" onchange="update()" autofocus></textarea></p>
+
+<p class="arrow">↓</p>
+
+<p>
+	<label>ROT</label>
+	<input id="rot" onchange="update()" type="number" size="5" min="1" value="10496" max="20991">
+</p>
+
+<p class="arrow">↓</p>
+
+<p><textarea id="output" cols="80" rows="12" readonly></textarea></p>
+
+</body>
+</html>
